@@ -1,1 +1,220 @@
-testing
+Motivation:
+------------
+1. xml sucks, json is easy to see by eyes or with the help of the "jsonlint.com" website(try it)
+2. Boost.Serialization library doesn't support json serialization as far as I know(xml is supported)
+3. in fact, I developed this tool just debugging other people's android C++ app's nested data structure content. like:
+typedef std::map<std::string, int> Map1_t;
+typedef std::map<std::string, Map1_t> Map2_t;
+typedef std::vector<Map2_t> Map2Vec_t;
+
+Map2Vec_t map2_vec;
+ma2_vec.push_back(...);
+ma2_vec.push_back(...);
+....
+-> debugging map2_vec content here...
+
+gdb  performed really horrible for these script commands on android(http://www.yolinux.com/TUTORIALS/src/dbinit_stl_views-1.03.txt)
+pmap 
+pvector
+plist 
+so I want to dump the content of the nested containers. json is the natural way to record data(copy the dumped result to jsonlint.com to 
+view the result)
+-----------
+
+
+Current Features:
+-------------------
+. using simple macros to dump nested container, arbitary data structure to json format, see the to_json_test.cpp file
+--------------------
+
+Planning Features:
+-----------------
+. unserialization
+. Linux Project(at current, I build it using VS2011, and copy the code to android project manually)
+. a lot of TODOs in codes
+
+
+
+
+------------------------example1---------------------------------------
+
+#include "to_json.h"
+
+struct S3
+{
+	std::string name;
+	int age;
+};
+
+
+struct S2
+{
+	std::string name;
+	int age;
+	S3 s3;
+};
+
+struct S1
+{
+	std::string name;
+	int age;
+	S2 s2;
+};
+
+
+JSON_STRUCT_BEGIN(S3)
+	JSON_STRUCT_MEMBER("name", name)
+	JSON_STRUCT_MEMBER("age", age)
+JSON_STRUCT_END()
+
+JSON_STRUCT_BEGIN(S2)
+	JSON_STRUCT_MEMBER("name", name)
+	JSON_STRUCT_MEMBER("age", age)
+	JSON_STRUCT_MEMBER("s3", s3)
+JSON_STRUCT_END()
+
+JSON_STRUCT_BEGIN(S1)
+	JSON_STRUCT_MEMBER("name", name)
+	JSON_STRUCT_MEMBER("age", age)
+	JSON_STRUCT_MEMBER("s2", s2)
+JSON_STRUCT_END()
+
+void test_subchild()
+{
+	S3 s3;
+	s3.name = "s3";
+	s3.age = 3;
+
+	S2 s2;
+	s2.name = "s2";
+	s2.age = 2;
+	s2.s3 = s3;
+
+	S1 s1;
+	s1.name = "s1";
+	s1.age = 1;
+	s1.s2 = s2;
+
+	using namespace Json;
+	Value v;
+
+	to_json(v, "s1", s1);
+	std::string ret = v.toStyledString();
+	PRINT_RESULT(ret);
+}
+
+-----------------result----------------------------
+{
+    "s1": {
+        "age": 1,
+        "name": "s1",
+        "s2": {
+            "age": 2,
+            "name": "s2",
+            "s3": {
+                "age": 3,
+                "name": "s3"
+            }
+        }
+    }
+}
+--------------------------------------------------------------
+
+
+------------------------example2---------------------------------------
+struct Foo1
+{
+	std::string m_name;
+	int			m_age;
+};
+
+JSON_STRUCT_BEGIN(Foo1)
+	JSON_STRUCT_MEMBER("name", m_name)
+	JSON_STRUCT_MEMBER("age", m_age)
+JSON_STRUCT_END()
+
+
+typedef std::vector<Foo1> FooVec_t;
+typedef std::map<std::string, Foo1> FooMap_t;
+typedef std::map<std::string, FooVec_t> FooVecMap_t;
+
+static void create_foo_vec(FooVec_t& foos)
+{
+	for (size_t i = 0; i < 3; ++i) {
+		Foo1 foo;
+		foo.m_name = "eric";
+		foo.m_age = i;
+
+		foos.push_back(foo);
+	}
+}
+
+void test_foo_vec_map()
+{
+	using namespace Json;
+	Value v;
+
+	FooVecMap_t foo_map;
+	for (int i = 0; i < 3; ++i) {
+		std::string map_key = (boost::format("foo%d") % i).str();
+		FooVec_t foo_vec;
+		create_foo_vec(foo_vec);
+		foo_map.insert(FooVecMap_t::value_type(map_key, foo_vec));
+	}
+
+	to_json(v, "foo_map", foo_map);
+
+	std::string ret = v.toStyledString();
+	PRINT_RESULT(ret);
+}
+
+--------------------------result--------------------------------
+{
+   "foo_map" : {
+      "foo0" : [
+         {
+            "age" : 0,
+            "name" : "eric"
+         },
+         {
+            "age" : 1,
+            "name" : "eric"
+         },
+         {
+            "age" : 2,
+            "name" : "eric"
+         }
+      ],
+      "foo1" : [
+         {
+            "age" : 0,
+            "name" : "eric"
+         },
+         {
+            "age" : 1,
+            "name" : "eric"
+         },
+         {
+            "age" : 2,
+            "name" : "eric"
+         }
+      ],
+      "foo2" : [
+         {
+            "age" : 0,
+            "name" : "eric"
+         },
+         {
+            "age" : 1,
+            "name" : "eric"
+         },
+         {
+            "age" : 2,
+            "name" : "eric"
+         }
+      ]
+   }
+}
+--------------------------------------------------------------------------
+
+
