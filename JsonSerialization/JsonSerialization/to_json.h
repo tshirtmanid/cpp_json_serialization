@@ -20,6 +20,16 @@
 		tmp_v[(MyMemberName)] = member_v;\
 	}
 
+//TODO make mature decision
+#define JSON_STRUCT_POINTER_MEMBER(MyMemberName, MyMember) \
+	{\
+		Json::Value member_v; \
+		if (!foo.MyMember) \
+			to_json(member_v, "", "null pointer"); \
+		else { to_json(member_v, "", *foo.MyMember); } \
+		tmp_v[(MyMemberName)] = member_v;\
+	}
+
 
 
 #define JSON_STRUCT_END() \

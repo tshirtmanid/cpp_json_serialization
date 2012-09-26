@@ -27,9 +27,6 @@
     <ClInclude Include="targetver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="JsonSerializer.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="jsoncpp\include\json\autolink.h">
       <Filter>jsoncpp</Filter>
     </ClInclude>
@@ -69,9 +66,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="JsonSerialization.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="JsonSerializer.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="jsoncpp\src\json_reader.cpp">

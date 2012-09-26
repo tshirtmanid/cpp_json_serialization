@@ -393,8 +393,49 @@ void test_common_type()
 	PRINT_RESULT(ret);
 }
 
+struct SWithPointer
+{
+	int *pInt;
+};
+
+JSON_STRUCT_BEGIN(SWithPointer)
+	JSON_STRUCT_POINTER_MEMBER("int", pInt)
+JSON_STRUCT_END()
+
+void test_pointer_member()
+{
+	int i = 3;
+	SWithPointer s;
+
+	s.pInt = &i;
+
+	using namespace Json;
+	Value v;
+
+	to_json(v, "", s);
+	std::string ret = v.toStyledString();
+	PRINT_RESULT(ret);
+}
+
+void test_null_pointer_member()
+{
+	SWithPointer s;
+
+	s.pInt = NULL;
+
+	using namespace Json;
+	Value v;
+
+	to_json(v, "", s);
+	std::string ret = v.toStyledString();
+	PRINT_RESULT(ret);
+}
+
+
 void json_test()
 {
+	test_null_pointer_member();
+	test_pointer_member();
 	test_common_type();
 	//test_float_member();
 	test_enum_member();
