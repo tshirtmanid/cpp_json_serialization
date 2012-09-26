@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/im/!svn/ver/112113/alibrowser/trunk/webkit-sdk/android/MobilePhoneBackup/MobilePhoneBackup/jsoncpp/src
+END
+json_valueiterator.inl
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/repos/im/!svn/ver/112113/alibrowser/trunk/webkit-sdk/android/MobilePhoneBackup/MobilePhoneBackup/jsoncpp/src/json_valueiterator.inl
+END
+json_batchallocator.h
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/repos/im/!svn/ver/112113/alibrowser/trunk/webkit-sdk/android/MobilePhoneBackup/MobilePhoneBackup/jsoncpp/src/json_batchallocator.h
+END
+json_internalmap.inl
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/repos/im/!svn/ver/112113/alibrowser/trunk/webkit-sdk/android/MobilePhoneBackup/MobilePhoneBackup/jsoncpp/src/json_internalmap.inl
+END
+json_internalarray.inl
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/repos/im/!svn/ver/112113/alibrowser/trunk/webkit-sdk/android/MobilePhoneBackup/MobilePhoneBackup/jsoncpp/src/json_internalarray.inl
+END
+json_value.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/repos/im/!svn/ver/112113/alibrowser/trunk/webkit-sdk/android/MobilePhoneBackup/MobilePhoneBackup/jsoncpp/src/json_value.cpp
+END
+json_writer.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/im/!svn/ver/112113/alibrowser/trunk/webkit-sdk/android/MobilePhoneBackup/MobilePhoneBackup/jsoncpp/src/json_writer.cpp
+END
+sconscript
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/repos/im/!svn/ver/112113/alibrowser/trunk/webkit-sdk/android/MobilePhoneBackup/MobilePhoneBackup/jsoncpp/src/sconscript
+END
+json_reader.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/im/!svn/ver/112113/alibrowser/trunk/webkit-sdk/android/MobilePhoneBackup/MobilePhoneBackup/jsoncpp/src/json_reader.cpp
+END
